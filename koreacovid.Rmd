@@ -1,7 +1,7 @@
 ---
 title: "covid 19"
-author: "Dr K"
-date: "5/2/2020"
+author: "Natalia Lekach"
+date: "3/17/2021"
 output:
   html_document: default
   pdf_document: default
@@ -37,16 +37,14 @@ with(kRdata, table(Sex, result))
 ```
 
 ## We create two bar charts - one based on frequency and the other on percent, use ggplot commands to do this
+```{r}
+barchartGC(~result + Sex,data=kRdata)
+barchartGC(~result + Sex,data=kRdata, type="percent")
 
-`
-
+```
   
+Of the patients who survived from COVID-19, the majority (~57%) were females. Of the patients who died from COVID-19, ~20% more of them were males. Males consisted of just of 60% of the deaths and  females consisted of slightly less than 40% of the deaths.  
 
-
-
-
-
-  
 ## Numerical results
 
 
