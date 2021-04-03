@@ -20,33 +20,53 @@ kRdata <- read.csv(file = 'kRdata.csv')
 
 Using COVID-19 data collected from January 1, 2020 to May 1, 2020 in South Korea, we will determine if the males die at a different rate than females or if death from COVID-19 is independent of sex. 
 
-Null hypothesis: Dying from COVID-19 is independent of sex. Males and females die at the same rate.
-Alternative hypothesis: Dying from COVID-19 is not independent of sex. Males and females die at a different rate. 
+Null hypothesis: Dying from COVID-19 in South Korea is independent of sex. Males and females die at the same rate.
+Alternative hypothesis: Dying from COVID-19 in South Korea is not independent of sex. There is a relationships between deaths in South Korea from COVID-19 and sex. 
  
 Some of the data was uncoded for sex - sex must be just male or female
 77 of the data entries were coded sex  as blank, so we omit these.
-state of a patient must be died or alive - we adjust that as well   
-
+state of a patient must be died or alive - we adjust that as well.  
+  
 Table of patients:
 ```{r}
-
+kRdata$Sex = as.factor(kRdata$Sex)
+kRdata$result = as.factor(kRdata$result)
 # cross tabulation, patient state by gender
 
-with(kRdata, table(result, sex))
-
-```
-
-## We create two bar charts - one based on frequency and the other on percent, use ggplot commands to do this
-```{r}
-barchartGC(~result + sex,data=kRdata)
-barchartGC(~result + sex,data=kRdata, type="percent")
-
+xtabs(~Sex+result,data=kRdata)
 ```
   
-Of the patients who survived from COVID-19, the majority (~57%) were females. Of the patients who died from COVID-19, ~20% more of them were males. Males consisted of just of 60% of the deaths and  females consisted of slightly less than 40% of the deaths.  
+# Descriptive Results  
+  
+## Graphical Summaries
+  
+### We create two bar charts - one based on frequency and the other on percent, use ggplot commands to do this
+```{r}
+dd2 <- kRdata %>% group_by(result,Sex) %>% summarize(count=n()) %>% mutate(prcnt=count/sum(count))
+
+
+# the group_by followed by summarize(count=n())
+
+basicC <- ggplot(dd2,aes(x=result,y=count,fill=Sex))
+basicC + geom_bar(stat="identity",position="dodge")
+
+#Now for percentage plot
+
+basicCC <- ggplot(dd2,aes(x=result,y=prcnt*100,fill=Sex)) 
+basicCC + geom_bar(stat="identity", position = "dodge")
+```
+  
+Of the patients who survived from COVID-19, the majority (~57%) were females. Of the patients who died from COVID-19, ~20% more of them were males. Males consisted of above 60% of the deaths and females consisted of slightly less than 40% of the deaths.  
 
 ## Numerical results
 
+```{r}
+table1 <- xtabs(~result + Sex, data=kRdata)
+rowPerc(table1)
+colPerc(table1)
+```
+  
+Of the patients who survived from COVID-19, the majority (56%) were females. Of the patients who died from COVID-19, 18% more of them were males. Males consisted of above 60% of the deaths and females consisted of less than 40% of the deaths. 
 
 ## Inferential results 
 
