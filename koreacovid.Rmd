@@ -70,8 +70,12 @@ Of the patients who survived from COVID-19, the majority (56%) were females. Of 
 
 ## Inferential results 
 
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+```
 
-
+With a relatively small sample size for those who died from COVID-19 in this dataset, we will examine the Fisher Exact Test scores. With a small p-value of 0.0009, we can determine that there is a statistically significant relationship between sex and mortality from COVID-19. The odds ratio indicates that males are 2.3 more likely to die from COVID-19 than females. 
 
 ## Conclusions
-
