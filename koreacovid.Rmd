@@ -40,7 +40,7 @@ xtabs(~Sex+result,data=kRdata)
   
 ## Graphical Summaries
   
-### We create two bar charts - one based on frequency and the other on percent, use ggplot commands to do this
+##### Using ggplot commands, we created two bar charts - one based on frequency and the other on percent.
 ```{r}
 dd2 <- kRdata %>% group_by(result,Sex) %>% summarize(count=n()) %>% mutate(prcnt=count/sum(count))
 
@@ -68,7 +68,7 @@ colPerc(table1)
   
 Of the patients who survived from COVID-19, the majority (56%) were females. Of the patients who died from COVID-19, 18% more of them were males. Males consisted of above 60% of the deaths and females consisted of less than 40% of the deaths. 
 
-## Inferential results 
+# Inferential results 
 
 ```{r}
 chisq.test(table1)
@@ -78,4 +78,7 @@ fisher.test(table1)
 
 With a relatively small sample size for those who died from COVID-19 in this dataset, we will examine the Fisher Exact Test scores. With a small p-value of 0.0009, we can determine that there is a statistically significant relationship between sex and mortality from COVID-19. The odds ratio indicates that males are 2.3 more likely to die from COVID-19 than females. 
 
-## Conclusions
+# Conclusions
+
+
+With a low p-value, we must determine that there is not enough evidence to support the null hypothesis. It is unlikely that these results occured by chance. This means that there was a statistically significant difference in the mortality of males and the mortality of females from COVID-19 in South Korea from January 1. 2020 to May 1, 2020. In fact, males were 2.3 times more likely to die from COVID-19 than females.   
